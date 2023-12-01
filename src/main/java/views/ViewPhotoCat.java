@@ -16,10 +16,12 @@ import cats.CatService;
 public class ViewPhotoCat extends JFrame{
 
 	private static final long serialVersionUID = 1L;
+	private Cat currentKitten=null;
 	
 	public ViewPhotoCat(JFrame previousWindow, Cat kitten) {
+		currentKitten=kitten;
 		//Window configuration
-		setTitle("CatsApp - "+kitten.getId());
+		setTitle("CatsApp - "+currentKitten.getId());
 		setSize(514,294);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -42,7 +44,7 @@ public class ViewPhotoCat extends JFrame{
 		btnBack.setBounds(367, 150, 123, 21);
 		desktopPane.add(btnBack);
 		//Label to display the image
-		JLabel lblImage = new JLabel(kitten.getImage());
+		JLabel lblImage = new JLabel(currentKitten.getImage());
 		lblImage.setBounds(10, 10, 347, 237);
 		desktopPane.add(lblImage);
 		
@@ -50,17 +52,15 @@ public class ViewPhotoCat extends JFrame{
 		btnOther.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Cat newkitten = CatService.seeCat();
-				if(newkitten!=null) {
-					lblImage.setIcon(newkitten.getImage());
-					setTitle("CatsApp - "+newkitten.getId());
-				}
+				currentKitten = CatService.seeCat();
+				lblImage.setIcon(currentKitten.getImage());
+		        setTitle("CatsApp - " + currentKitten.getId());
 			}
 		});
 		btnFavorite.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				CatService.favoriteKitten(kitten);
 			}
 		});
 		btnBack.addActionListener(new ActionListener() {

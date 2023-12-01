@@ -31,8 +31,12 @@ public class ViewMenuCat extends JFrame {
 		
 		//Button to see cats
 		JButton btnSeeCat = new JButton("See cat");
-		btnSeeCat.setBounds(173, 104, 138, 29);
+		btnSeeCat.setBounds(173, 80, 138, 29);
 		desktopPane.add(btnSeeCat);
+		//Button to list cats
+		JButton btnListCat = new JButton("List cat");
+		btnListCat.setBounds(173, 135, 138, 29);
+		desktopPane.add(btnListCat);
 		
 		//Action to the button "See Cat"
 		btnSeeCat.addActionListener(new ActionListener() {
@@ -41,6 +45,13 @@ public class ViewMenuCat extends JFrame {
 				Cat kitten =CatService.seeCat();
 				CatService.displayCatPhoto(ViewMenuCat.this, kitten);
 				dispose();
+			}
+		});
+		//Action to the button "List cat"
+		btnListCat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CatService.displayListFavoriteKittens();
 			}
 		});
 	}

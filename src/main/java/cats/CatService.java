@@ -7,8 +7,10 @@ import javax.swing.JFrame;
 import views.ViewPhotoCat;
 
 public class CatService {
+	/**
+	 * Return a Cat object
+	 * */
 	public static Cat seeCat() {
-		//Return a Cat object
 		try {
 			return CatDAO.getCat();
 		} catch (IOException e) {
@@ -19,5 +21,13 @@ public class CatService {
 	public static void displayCatPhoto(JFrame previousWindow, Cat kitten) {
 		ViewPhotoCat viewPhotocat=new ViewPhotoCat(previousWindow, kitten);
 		viewPhotocat.setVisible(true);
+	}
+	
+	public static void favoriteKitten(Cat kitten) {
+		CatDAO.postFavoriteCat(kitten);
+	}
+	
+	public static void displayListFavoriteKittens() {
+		CatDAO.getListFavoriteCats();
 	}
 }

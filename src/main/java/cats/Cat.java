@@ -3,10 +3,10 @@ package cats;
 import javax.swing.ImageIcon;
 
 public class Cat {
-	String id;
-	String url;
-	String apikey=System.getenv("API_KEY_CATS");
-	ImageIcon image;
+	private String id;
+	private String url;
+	private String apikey=System.getenv("API_KEY_CATS");
+	private ImageIcon image;
 	
 	public ImageIcon getImage() {
 		return image;
