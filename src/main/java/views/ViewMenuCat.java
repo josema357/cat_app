@@ -51,7 +51,8 @@ public class ViewMenuCat extends JFrame {
 		btnListCat.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				CatService.displayListFavoriteKittens();
+				CatService.displayListFavoriteKittens(ViewMenuCat.this);
+				dispose();
 			}
 		});
 	}

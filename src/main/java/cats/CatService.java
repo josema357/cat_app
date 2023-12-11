@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.swing.JFrame;
 
+import views.ViewFavoritesCats;
 import views.ViewPhotoCat;
 
 public class CatService {
@@ -27,7 +28,10 @@ public class CatService {
 		CatDAO.postFavoriteCat(kitten);
 	}
 	
-	public static void displayListFavoriteKittens() {
-		CatDAO.getListFavoriteCats();
+	public static void displayListFavoriteKittens(JFrame previousWindow){
+		CatFavorite[] catsList = CatDAO.getListFavoriteCats();
+		ViewFavoritesCats viewFavorites= new ViewFavoritesCats(previousWindow, catsList);
+		viewFavorites.setVisible(true);
 	}
+
 }

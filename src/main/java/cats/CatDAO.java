@@ -77,7 +77,7 @@ public class CatDAO {
 	/**
 	 * This method is used to get a list of favorite kittens
 	 * */
-	public static void getListFavoriteCats() {
+	public static CatFavorite[] getListFavoriteCats() {
 		try {
 			OkHttpClient client = new OkHttpClient().newBuilder()
 					  .build();
@@ -91,9 +91,43 @@ public class CatDAO {
 			String json=response.body().string();
 			CatFavorite[] catsArray=gson.fromJson(json, CatFavorite[].class);
 			for(CatFavorite kitten: catsArray) {
-				System.out.println(kitten.getImage().getId());
-				System.out.println(kitten.getImage().getUrl());
+				//Get image to the API
+				try {
+					// Load the image from the URL
+		            ImageIcon imageIcon = new ImageIcon(new URL(kitten.getImage().getUrl()));
+		            Image image = imageIcon.getImage();
+		            //Set image size
+		            Image scaledImage = image.getScaledInstance(300, 237, Image.SCALE_SMOOTH);
+		            ImageIcon resizedImage=new ImageIcon(scaledImage);
+					kitten.getImage().setImage(resizedImage);
+				} catch (Exception e) {
+					System.out.println(e);
+				}
 			}
+			return catsArray;
+		} catch (IOException e) {
+			System.out.println(e);
+			return null;
+		}
+	}
+	
+	/**
+	 * This method is used to delete a cat from the list of favorites
+	 * */
+	public static void deleteFavoriteCat(CatFavorite catFav) {
+		try {
+			OkHttpClient client = new OkHttpClient().newBuilder()
+					  .build();
+					MediaType mediaType = MediaType.parse("application/json");
+					RequestBody body = createRequestBody(mediaType, "");
+					Request request = new Request.Builder()
+					  .url("https://api.thecatapi.com/v1/favourites/"+catFav.getId())
+					  .method("DELETE", body)
+					  .addHeader("Content-Type", "application/json")
+					  .addHeader("x-api-key", System.getenv("API_KEY_CATS"))
+					  .build();
+			Response response = client.newCall(request).execute();
+			System.out.println(response.body().string());
 		} catch (IOException e) {
 			System.out.println(e);
 		}
